@@ -1,8 +1,8 @@
 const initialState = {
     items: [
-      {  id:0,body: "Pay Bills",completed:false},
-      {  id:1,body: "Go Shopping",completed:false },
-      {  id:2,body: "See the Doctor",completed:true},
+      {  id:0,body: "Pay Bills",completed:false,editMode:false},
+      {  id:1,body: "Go Shopping",completed:false,editMode:true },
+      {  id:2,body: "See the Doctor",completed:true,editMode:false},
     ],
   }
   

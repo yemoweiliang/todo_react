@@ -7,18 +7,13 @@ class ToDo extends React.Component {
   constructor(props) {
     super(props);
     var items=[...props.items]
-    items.forEach(
-      (item)=>{
-        item['editable']=false
-      }
-    )
     this.state={items:items}
   }
 
   showItem(item) {
     
     var ind=this.state.items.findIndex((it)=>(it.id==item.id))
-    var edit=this.state.items[ind].editable?item.editable:false
+    var edit=this.state.items[ind].editMode?item.editMode:false
     return <li key={item.id} className={edit?"editMode":''}>
       <input type="checkbox" 
         defaultChecked={item.completed} 
@@ -36,9 +31,9 @@ class ToDo extends React.Component {
           edit=!edit
           
           var newItems=[...this.state.items]
-          newItems[ind]['editable']=edit
+          newItems[ind].editMode=edit
           this.setState({items:newItems})
-          
+          this.props.updateItemAction(item.id,{editMode:edit})
           }}>Edit</button>
         <button className="delete" onClick={()=>{
           this.props.removeItemAction(item.id)
