@@ -12,7 +12,7 @@ class ToDo extends React.Component {
 
   showItem(item) {
     
-    var ind=this.state.items.findIndex((it)=>(it.id==item.id))
+    var ind=this.state.items.findIndex((it)=>(it.id===item.id))
     var edit=this.state.items[ind].editMode?item.editMode:false
     return <li key={item.id} className={edit?"editMode":''}>
       <input type="checkbox" 
@@ -59,11 +59,9 @@ class ToDo extends React.Component {
       
       <h3>Completed</h3>
       <ul id="completed-tasks">
-        <li>
           {this.props.completedItems.map((item,index)=>{
             return this.showItem(item)
           })}
-        </li>
       </ul>
 
 

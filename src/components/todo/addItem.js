@@ -17,6 +17,7 @@ class AddItem extends React.Component {
     this.setState({item:{body:''}})
   }
   handleChange(event) {
+      
     this.setState({item: {body:event.target.value}});
   }
     render() {
