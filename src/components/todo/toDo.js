@@ -39,11 +39,19 @@ class ToDo extends React.Component {
           this.props.removeItemAction(item.id)
         }}   >Delete</button></li>
   }
-  componentWillReceiveProps(nextProps){
-    if(JSON.stringify(nextProps.items)!==JSON.stringify(this.props.items)){
-      this.setState({items:[...nextProps.items]})
+  // componentWillReceiveProps(nextProps){
+  //   if(JSON.stringify(nextProps.items)!==JSON.stringify(this.props.items)){
+  //     this.setState({items:[...nextProps.items]})
       
+  //   }
+  // }
+  static getDerivedStateFromProps(props, state) {
+    if(JSON.stringify(props.items)!==JSON.stringify(state.items)){
+      return {
+        items:[...props.items]
+      }
     }
+    return null
   }
   render() {
       
