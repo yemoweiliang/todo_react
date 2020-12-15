@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux"
 import {addItemAction} from "../../redux/action"
-import './toDo.css';
+//import './toDo.css';
+//import style from './toDo.css'
+import todoStyle from './toDo.module.css';
 class AddItem extends React.Component {
   constructor(props) {
     super(props);
@@ -22,10 +24,10 @@ class AddItem extends React.Component {
   }
     render() {
       return (
-      <div className="container">
+      <div className={todoStyle.container}>
           <p>
             <label htmlFor="new-task">Add Item</label>
-            <input id="new-task" type="text" onChange={this.handleChange} value={this.state.item.body}/>
+            <input id={todoStyle["new-task"]} type="text" onChange={this.handleChange} value={this.state.item.body}/>
             <button onClick={this.handleAddItem}>Add</button>
           </p>
       </div>
@@ -35,12 +37,7 @@ class AddItem extends React.Component {
     }
   }
 const mapDispatchToProps=(dispatch)=>{
-    return {
-        addItemAction:(body)=>{
-            
-            dispatch(addItemAction(body))
-        }
-    }
+    return {addItemAction:(body)=>{dispatch(addItemAction(body))}}
 }
 
 export default connect(null,mapDispatchToProps)(AddItem)

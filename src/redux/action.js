@@ -1,9 +1,10 @@
-let nextTodoId = 3
+//let nextTodoId = 3
+//minimo id 
 export function addItemAction(text){
     return {
         type:"ADD_ITEM",
         item:{
-            id: nextTodoId++,
+            id:new Date(),
             body:text,
             completed:false
         }

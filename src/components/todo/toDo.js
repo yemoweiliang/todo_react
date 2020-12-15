@@ -2,19 +2,20 @@ import React from 'react';
 import { connect } from "react-redux"
 import AddItem from './addItem'
 import {removeItemAction,updateItemAction} from "../../redux/action"
-import './toDo.css';
+//import './toDo.css';
+import todoStyle from './toDo.module.css';
 class ToDo extends React.Component {
   constructor(props) {
     super(props);
-    var items=[...props.items]
+    let items=[...props.items]
     this.state={items:items}
   }
 
   showItem(item) {
-    
-    var ind=this.state.items.findIndex((it)=>(it.id===item.id))
-    var edit=this.state.items[ind].editMode?item.editMode:false
-    return <li key={item.id} className={edit?"editMode":''}>
+    //remove var  change them to let/const 
+    let ind=this.state.items.findIndex((it)=>(it.id===item.id))
+    let edit=this.state.items[ind].editMode?item.editMode:false
+    return <li key={item.id} className={edit?todoStyle.editMode:''}>
       <input type="checkbox" 
         defaultChecked={item.completed} 
         onClick={()=>{
@@ -22,51 +23,44 @@ class ToDo extends React.Component {
         }}/>
     <label>{item.body}</label>
       <input type="text" value={item.body} onChange={(e)=>{
-        var newItems=[...this.state.items]
+        //event 传值问题
+        let newItems=[...this.state.items]
         newItems[ind].body=e.target.value
-        this.setState({items:newItems})
+        //this.setState({items:newItems})
         this.props.updateItemAction(item.id,{body:e.target.value})
       }}/>
-        <button className="edit" onClick={()=>{
-          edit=!edit
-          
-          var newItems=[...this.state.items]
+        <button className={todoStyle.edit} onClick={()=>{
+          edit=!edit   
+          let newItems=[...this.state.items]
           newItems[ind].editMode=edit
+          //setState 逻辑要清晰， 要习惯做减法， setSate 和 the props 可能重复了
           this.setState({items:newItems})
-          this.props.updateItemAction(item.id,{editMode:edit})
+          //this.props.updateItemAction(item.id,{editMode:edit})
           }}>Edit</button>
-        <button className="delete" onClick={()=>{
+        <button className={todoStyle.delete}onClick={()=>{
           this.props.removeItemAction(item.id)
         }}   >Delete</button></li>
   }
-  // componentWillReceiveProps(nextProps){
-  //   if(JSON.stringify(nextProps.items)!==JSON.stringify(this.props.items)){
-  //     this.setState({items:[...nextProps.items]})
-      
-  //   }
-  // }
+  //refresh page when props /state changed by redux
   static getDerivedStateFromProps(props, state) {
     if(JSON.stringify(props.items)!==JSON.stringify(state.items)){
-      return {
-        items:[...props.items]
-      }
-    }
+      return {items:[...props.items]}}
     return null
   }
   render() {
       
       return (
-      <div className="container">
+      <div className={todoStyle.container}>
           <AddItem/>
       <h3>Todo</h3>
-      <ul id="incomplete-tasks">
+      <ul id={todoStyle["incomplete-tasks"]}>
           {this.props.incompleteItems.map((item,index)=>{
             return this.showItem(item)
           })}
       </ul>
-      
       <h3>Completed</h3>
-      <ul id="completed-tasks">
+      {/* id selector, 名字只支持 驼峰式 */}
+      <ul id={todoStyle['completed-tasks']}>
           {this.props.completedItems.map((item,index)=>{
             return this.showItem(item)
           })}
@@ -82,9 +76,9 @@ class ToDo extends React.Component {
 
 
 const mapStateToProps=state=>{
-  var completedItems=state.items.filter((item)=>(item.completed))
-  var incompleteItems=state.items.filter((item)=>!item.completed)
-  var totalItems=state.items.length
+  let completedItems=state.items.filter((item)=>(item.completed))
+  let incompleteItems=state.items.filter((item)=>!item.completed)
+  let totalItems=state.items.length
   return{
     completedItems:completedItems,
     incompleteItems:incompleteItems,

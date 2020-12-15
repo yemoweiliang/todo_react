@@ -13,14 +13,12 @@ const initialState = {
         case "REMOVE_ITEM":
             return {...state,items:state.items.filter((item)=>(item.id!==action.id))}
         case "UPDATE_ITEM":
-            var newState={...state}
+            let newState={...state}
             newState.items.forEach(
                 (item,ind)=>{
                     if (item.id===action.id){
                         newState.items[ind]={...item,...action.payload}
-                    }
-                    
-                }
+                    }}
             )
             return newState;
         default:
